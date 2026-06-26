@@ -1,0 +1,3820 @@
+/* ==========================================
+   街机音游档案馆 - 全站通用 杂志像素风 (明快黑粉)
+   ========================================== */
+
+/* 引入复古等宽像素字体 */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+:root {
+  /* 基础配色：浅色复古卡带包装与游戏说明书的纸张质感 */
+  --bg-color: #f4f3f6;       
+  --panel-bg: #ffffff;     
+  --text-main: #1a1a24;     
+  --text-sub: #6e6775;      
+  
+  /* 核心黑粉像素色 */
+  --pixel-pink: #ff007f;    
+  --pixel-black: #1a1a24;   
+  --pixel-yellow: #ffcc00;  
+  
+  /* 标志性的硬核像素杂志厚阴影 */
+  --pixel-shadow: 6px 6px 0px #1a1a24;
+  --card-shadow-hover: 10px 10px 0px #ff007f;
+}
+
+/* ==========================================
+   0. 全局样式与自定义像素鼠标
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-radius: 0 !important; /* 强制绝对直角 */
+  image-rendering: pixelated;
+  
+  /* 默认：黑边粉心像素箭头 */
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M0,0 H2 V24 H0 Z M2,2 H4 V22 H2 Z M4,4 H6 V20 H4 Z M6,6 H8 V18 H6 Z M8,8 H10 V16 H8 Z M10,10 H12 V14 H10 Z M12,12 H14 V14 H12 Z' fill='%231a1a24'/%3E%3Cpath d='M2,2 H4 V20 H2 Z M4,4 H6 V18 H4 Z M6,6 H8 V16 H6 Z M8,8 H10 V14 H8 Z M10,10 H12 V12 H10 Z' fill='%23ff007f'/%3E%3Cpath d='M2,2 H4 V4 H2 Z M4,4 H6 V6 H4 Z' fill='%23fff'/%3E%3C/svg%3E"), default;
+}
+
+/* 悬停状态：黄色像素小手 */
+a, button, .machine-option, .category-card, .home-entry-card {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M8,0 H12 V12 H8 Z M6,4 H8 V12 H6 Z M4,6 H6 V14 H4 Z M2,8 H4 V16 H2 Z M0,10 H2 V16 H0 Z M2,16 H14 V18 H2 Z M4,18 H12 V20 H4 Z' fill='%231a1a24'/%3E%3Cpath d='M8,2 H10 V12 H8 Z M6,6 H8 V12 H6 Z M4,8 H6 V14 H4 Z M2,10 H4 V14 H2 Z M8,14 H12 V16 H8 Z' fill='%23ffcc00'/%3E%3C/svg%3E"), pointer;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  letter-spacing: 0;
+  overflow-x: hidden;
+  /* 像素底纹网格 */
+  background-image: linear-gradient(rgba(26, 26, 36, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(26, 26, 36, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.page-noise {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(26, 26, 36, 0.02) 50%);
+  background-size: 100% 4px;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* ==========================================
+   1. 公共导航栏
+   ========================================== */
+.site-header {
+  background-color: var(--panel-bg);
+  border-bottom: 4px solid var(--pixel-black);
+  padding: 16px 20px;
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.brand {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.brand-logo {
+  width: 48px;
+  height: 48px;
+  background-color: var(--panel-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' style='image-rendering:pixelated;'%3E%3Cpath d='M4,1 H12 V2 H13 V5 H12 V3 H4 V5 H3 V2 H4 Z' fill='%23ff007f'/%3E%3Cpath d='M2,5 H3 V9 H2 Z M13,5 H14 V9 H13 Z M3,4 H13 V5 H3 Z' fill='%231a1a24'/%3E%3Cpath d='M3,5 H13 V10 H12 V11 H4 V10 H3 Z' fill='%23fff'/%3E%3Cpath d='M5,7 H7 V8 H5 Z M9,7 H11 V8 H9 Z' fill='%23ff007f'/%3E%3Cpath d='M4,8 H5 V9 H4 Z M11,8 H12 V9 H11 Z' fill='%23ffcc00'/%3E%3Cpath d='M4,11 H12 V14 H4 Z' fill='%231a1a24'/%3E%3Cpath d='M7,11 H9 V12 H7 Z' fill='%23ff007f'/%3E%3Cpath d='M2,12 H4 V14 H2 Z M12,12 H14 V14 H12 Z' fill='%23ff007f'/%3E%3C/svg%3E");
+  background-size: 90% 90%;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: transparent;
+  font-size: 0;
+  line-height: 0;
+  padding: 0;
+  border: 2px solid var(--pixel-pink);
+  box-shadow: 2px 2px 0px var(--pixel-black);
+  text-indent: -9999px;
+  overflow: hidden;
+}
+.brand-text strong {
+  color: var(--pixel-black);
+  font-size: 18px;
+  display: block;
+}
+.brand-text em {
+  font-style: normal;
+  color: var(--pixel-pink);
+  font-size: 12px;
+  font-weight: bold;
+}
+.site-nav a {
+  color: var(--pixel-black);
+  text-decoration: none;
+  padding: 6px 14px;
+  margin-left: 8px;
+  border: 2px solid transparent;
+  font-size: 14px;
+  font-weight: bold;
+}
+.site-nav a:hover, .site-nav a.active {
+  color: #fff;
+  background-color: var(--pixel-pink);
+  border: 2px solid var(--pixel-black);
+  box-shadow: 2px 2px 0px var(--pixel-black);
+}
+.nav-toggle {
+  width: 38px;
+  height: 34px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  background: var(--panel-bg);
+  border: 3px solid var(--pixel-black);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+.nav-toggle span {
+  width: 18px;
+  height: 3px;
+  display: block;
+  background: var(--pixel-black);
+}
+
+/* ==========================================
+   2. 首页专用：复古杂志巨幕 (mag-cover)
+   ========================================== */
+.mag-cover {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+.home-main {
+  min-height: 100vh;
+  padding: 0 0 70px;
+  background-color: var(--bg-color);
+  background-image: linear-gradient(rgba(26, 26, 36, 0.03) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(26, 26, 36, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.home-poster {
+  width: 100%;
+  margin: 0 auto;
+  padding: 120px 0 58px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-color) 0%, rgba(255, 0, 127, 0.08) 30%, rgba(255, 0, 127, 0.06) 55%, var(--bg-color) 100%);
+  box-shadow: none;
+}
+.home-poster::after {
+  display: none;
+}
+.poster-wave {
+  display: none;
+}
+.home-poster-page {
+  position: relative;
+  z-index: 2;
+  width: min(1180px, calc(100vw - 48px));
+  min-height: 760px;
+  margin: 0 auto;
+  padding: 24px 40px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f7f7f7;
+  background-image:
+    linear-gradient(rgba(26, 26, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 4px solid rgba(255, 0, 127, 0.24);
+  overflow: visible;
+}
+.home-poster-page::before,
+.home-poster-page::after {
+  display: none;
+}
+.poster-mini-nav {
+  display: grid;
+  grid-template-columns: 1fr repeat(4, auto);
+  gap: 34px;
+  align-items: center;
+  margin-bottom: 52px;
+  color: var(--pixel-black);
+  font-size: 11px;
+  font-weight: bold;
+}
+.poster-mini-nav span:first-child {
+  font-size: 13px;
+}
+.poster-cloud {
+  display: none;
+}
+.cloud-left {
+  left: 72px;
+  top: 190px;
+}
+.cloud-right {
+  right: 112px;
+  top: 210px;
+}
+.home-poster-hero {
+  min-height: 0;
+  display: block;
+  text-align: center;
+}
+.cover-topline {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--pixel-black);
+  padding-bottom: 6px;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.cover-topline span { color: var(--text-sub); }
+.cover-topline strong { color: var(--pixel-pink); }
+
+.home-title-lockup {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  text-align: center;
+  z-index: 2;
+}
+.home-title-lockup::after {
+  content: "";
+  display: block;
+  width: min(280px, 60vw);
+  height: 4px;
+  margin: 18px auto 0;
+  background: linear-gradient(90deg, rgba(255, 0, 127, 0.92), rgba(255, 0, 127, 0.22), rgba(255, 0, 127, 0.92));
+  filter: blur(0.2px);
+}
+.home-title-kicker {
+  width: fit-content;
+  color: #fff;
+  background: var(--pixel-black);
+  border: 2px solid var(--pixel-pink);
+  padding: 4px 8px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.home-main-title {
+  max-width: 820px;
+  margin: 0 auto;
+  color: var(--pixel-black);
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(3rem, 5.5vw, 5.2rem);
+  line-height: 0.95;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  display: inline-grid;
+  gap: 10px;
+  text-shadow: 2px 2px 0 rgba(255, 0, 127, 0.14);
+  position: relative;
+}
+.home-main-title span {
+  display: block;
+}
+.home-main-title span:nth-child(1),
+.home-main-title span:nth-child(3) {
+  color: var(--pixel-black);
+}
+.home-main-title span:nth-child(2) {
+  color: var(--pixel-pink);
+}
+.home-main-title::before {
+  content: none;
+}
+.home-title-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+.home-title-meta span {
+  color: var(--pixel-black);
+  background: var(--panel-bg);
+  border: 2px solid var(--pixel-black);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.home-subtitle {
+  width: fit-content;
+  margin: 26px auto 0;
+  padding: 6px 12px;
+  color: var(--pixel-black);
+  background: var(--panel-bg);
+  border: 3px solid var(--pixel-black);
+  box-shadow: 4px 4px 0 var(--pixel-black);
+  font-size: 16px;
+  font-weight: bold;
+}
+.home-avatar-scene {
+  margin: 30px auto 44px;
+  width: fit-content;
+}
+.home-avatar-scene .pixel-avatar {
+  width: 88px;
+  height: 88px;
+}
+.home-avatar-scene .pixel-avatar-shadow {
+  width: 66px;
+}
+.home-poster-copy {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+.home-poster-copy p {
+  color: var(--text-sub);
+  font-size: 12px;
+  line-height: 1.7;
+  font-weight: bold;
+}
+.home-section-title {
+  display: none;
+  margin: 0 0 36px;
+  color: var(--pixel-black);
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: clamp(4.2rem, 9vw, 8rem);
+  line-height: 0.78;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0 var(--pixel-pink);
+}
+.home-service-label {
+  display: none;
+  margin: 0 0 28px;
+  color: var(--pixel-black);
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 44px;
+  line-height: 0.82;
+  text-align: center;
+}
+
+.cover-title {
+  font-size: 5vw;
+  font-weight: 900;
+  line-height: 0.95;
+  margin: 24px 0 10px 0;
+  display: flex;
+  flex-direction: column;
+  text-transform: uppercase;
+}
+.title-stroke {
+  color: transparent;
+  -webkit-text-stroke: 3px var(--pixel-black);
+}
+.title-pop {
+  color: var(--pixel-pink);
+  text-shadow: 4px 4px 0px var(--pixel-black);
+}
+.title-bang {
+  color: var(--pixel-black);
+}
+
+.cover-kana {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--pixel-black);
+  margin-bottom: 4px;
+}
+.cover-sub {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-bottom: 30px;
+  border-bottom: 4px double var(--pixel-black);
+  padding-bottom: 8px;
+}
+
+.cover-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: start;
+}
+.cover-copy h1 {
+  font-size: 26px;
+  color: var(--pixel-black);
+  margin-bottom: 12px;
+}
+.cover-copy p {
+  color: var(--text-sub);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.issue-label {
+  background: var(--pixel-black);
+  color: var(--pixel-yellow);
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+/* ==========================================
+   3. 首页专用：下方三大入口卡片网格
+   ========================================== */
+.home-entry-board {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+.home-entry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+.home-poster-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+.home-entry-card {
+  background-color: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  padding: 30px 24px;
+  box-shadow: var(--pixel-shadow);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.05s steps(1), box-shadow 0.05s steps(1);
+}
+.home-poster-grid .home-entry-card {
+  min-height: 232px;
+  padding: 22px 18px 20px;
+  background: rgba(255, 0, 127, 0.14);
+  border: 4px solid rgba(255, 0, 127, 0.26);
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.16);
+}
+.home-poster-grid .home-entry-card span {
+  font-size: 20px;
+  color: var(--pixel-black);
+}
+.home-poster-grid .home-entry-card h3 {
+  font-size: 19px;
+}
+.home-poster-grid .home-entry-card p {
+  font-size: 12px;
+}
+.entry-pixel-icon {
+  height: 78px;
+  margin-bottom: 18px;
+  display: block;
+  position: relative;
+}
+.entry-pixel-icon::before {
+  content: "";
+  display: block;
+  margin: 0 auto;
+  image-rendering: pixelated;
+}
+.icon-type::before {
+  width: 72px;
+  height: 50px;
+  background:
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 0 0 / 72px 12px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 8px 12px / 56px 12px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 20px 24px / 32px 14px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 30px 38px / 12px 12px no-repeat;
+}
+.icon-machine::before {
+  width: 82px;
+  height: 58px;
+  background:
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 0 18px / 82px 20px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 12px 6px / 58px 12px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 20px 38px / 42px 12px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 34px 50px / 14px 8px no-repeat;
+}
+.icon-guide::before {
+  width: 86px;
+  height: 58px;
+  background:
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 0 14px / 86px 16px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 8px 30px / 70px 12px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 24px 0 / 38px 14px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 34px 42px / 18px 16px no-repeat;
+}
+.icon-gallery::before {
+  width: 78px;
+  height: 70px;
+  background:
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 8px 0 / 62px 18px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 0 18px / 78px 34px no-repeat,
+    linear-gradient(var(--pixel-black), var(--pixel-black)) 12px 52px / 54px 18px no-repeat;
+}
+
+.home-poster-grid .entry-pixel-icon {
+  height: 94px;
+  margin-bottom: 14px;
+}
+
+.home-poster-grid .entry-pixel-icon::before {
+  width: 88px;
+  height: 88px;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  clip-path: circle(49% at 50% 50%);
+  image-rendering: auto;
+  filter: drop-shadow(5px 5px 0 rgba(26, 26, 36, 0.18));
+  animation: homeCdSpin 9s linear infinite;
+  transform-origin: 50% 50%;
+}
+
+.home-poster-grid .icon-type::before {
+  background-image: url("../assets/images/home-cds/cd-type.png") !important;
+}
+
+.home-poster-grid .icon-machine::before {
+  background-image: url("../assets/images/home-cds/cd-machine.png") !important;
+  animation-duration: 10.5s;
+}
+
+.home-poster-grid .icon-guide::before {
+  background-image: url("../assets/images/home-cds/cd-guide.png") !important;
+  animation-duration: 8.5s;
+  animation-direction: reverse;
+}
+
+.home-poster-grid .icon-gallery::before {
+  background-image: url("../assets/images/home-cds/cd-gallery.png") !important;
+  animation-duration: 11s;
+}
+
+.home-entry-card:hover .entry-pixel-icon::before {
+  animation-duration: 3.5s;
+}
+
+@keyframes homeCdSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-poster-grid .entry-pixel-icon::before {
+    animation: none;
+  }
+}
+.home-entry-card span {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--pixel-pink);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.home-entry-card small {
+  font-size: 11px;
+  color: var(--text-sub);
+  font-weight: bold;
+  margin-bottom: 16px;
+  border-bottom: 2px dashed rgba(26,26,36,0.1);
+  padding-bottom: 6px;
+}
+.home-entry-card h3 {
+  font-size: 22px;
+  color: var(--pixel-black);
+  margin-bottom: 10px;
+}
+.home-entry-card p {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.5;
+}
+.home-entry-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* ==========================================
+   4. 通用组件：区块头部与视觉插槽
+   ========================================== */
+.section-head {
+  margin-bottom: 28px;
+  border-left: 6px solid var(--pixel-pink);
+  padding-left: 14px;
+}
+.section-label {
+  font-size: 12px;
+  color: var(--text-sub);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.section-head h2 {
+  font-size: 24px;
+  color: var(--pixel-black);
+}
+
+.visual-slot {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-shadow: var(--pixel-shadow);
+}
+.visual-slot span {
+  font-size: 12px;
+  color: var(--text-sub);
+  border: 1px dashed var(--text-sub);
+  padding: 2px 6px;
+  margin-bottom: 10px;
+}
+.visual-slot strong {
+  font-size: 16px;
+  color: var(--pixel-black);
+  margin-bottom: 6px;
+}
+.visual-slot p {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+.visual-slot::before {
+  content: "● INSERT COIN";
+  position: absolute;
+  top: 10px; right: 12px;
+  font-size: 11px;
+  color: var(--pixel-pink);
+  font-weight: bold;
+}
+
+.machine-image-grid {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 22px;
+}
+.machine-image-grid .main-image,
+.machine-image-grid .sub-image {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+  overflow: hidden;
+}
+.machine-image-grid .main-image img,
+.machine-image-grid .sub-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.sub-image-grid {
+  display: grid;
+  gap: 22px;
+}
+.sub-image {
+  min-height: 180px;
+}
+
+/* ==========================================
+   5. 子页面专用：Hero区域、分类页与机台看板
+   ========================================== */
+.page-hero {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 32px;
+  align-items: start;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+}
+.eyebrow {
+  color: var(--pixel-black);
+  background: transparent;
+  border: none;
+  display: inline-block;
+  padding: 0;
+  margin-bottom: 14px;
+  font-weight: bold;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.page-hero h1 {
+  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  color: var(--pixel-black);
+  margin-bottom: 14px;
+  border-bottom: none;
+  padding-bottom: 0;
+  text-shadow: none;
+  line-height: 1.05;
+}
+.page-hero p {
+  color: var(--text-sub);
+  line-height: 1.75;
+  font-size: 14px;
+  max-width: 690px;
+}
+
+/* 分类页卡片 */
+.category-grid {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+}
+.category-card.wide-card { grid-column: span 1; }
+.category-card {
+  background-color: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  padding: 24px;
+  box-shadow: var(--pixel-shadow);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.05s steps(1), box-shadow 0.05s steps(1);
+}
+.card-no {
+  font-size: 13px;
+  color: var(--pixel-black);
+  background: rgba(26, 26, 36, 0.08);
+  display: inline-block;
+  padding: 4px 8px;
+  margin-bottom: 16px;
+  align-self: flex-start;
+  font-weight: bold;
+  border: 1px solid rgba(26, 26, 36, 0.14);
+}
+.category-card h2 {
+  font-size: 22px;
+  color: var(--pixel-black);
+  margin-bottom: 12px;
+  border-bottom: 2px dashed rgba(26, 26, 36, 0.15);
+  padding-bottom: 8px;
+}
+.category-card p {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.5;
+  margin-bottom: 18px;
+  flex-grow: 1;
+}
+.machine-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.machine-chip-list a {
+  color: var(--pixel-black);
+  background: var(--bg-color);
+  border: 2px solid var(--pixel-black);
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: bold;
+  text-decoration: none;
+  box-shadow: 2px 2px 0 var(--pixel-black);
+}
+.machine-chip-list a:hover {
+  color: #fff;
+  background: var(--pixel-pink);
+}
+.category-open {
+  display: block;
+  text-align: center;
+  background-color: rgba(255, 0, 127, 0.12);
+  color: var(--pixel-black);
+  text-decoration: none;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: bold;
+  border: 2px solid rgba(255, 0, 127, 0.26);
+  box-shadow: 3px 3px 0px rgba(26, 26, 36, 0.14);
+}
+.category-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--card-shadow-hover);
+}
+.category-open:hover {
+  background-color: var(--pixel-pink);
+  color: #ffffff;
+  box-shadow: 2px 2px 0px var(--pixel-black);
+}
+
+/* 机台具体看板 */
+.type-machine-board {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 30px 20px;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+}
+.machine-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.machine-option {
+  background: var(--bg-color);
+  border: 2px solid var(--pixel-black);
+  padding: 20px;
+  text-decoration: none;
+  display: block;
+  box-shadow: 3px 3px 0px var(--pixel-black);
+}
+.machine-option span {
+  font-size: 11px;
+  color: #fff;
+  background: var(--pixel-pink);
+  display: inline-block;
+  padding: 1px 4px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+.machine-option h3 {
+  font-size: 18px;
+  color: var(--pixel-black);
+  margin-bottom: 8px;
+}
+.machine-option p {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.machine-option b {
+  font-size: 12px;
+  color: var(--pixel-pink);
+  font-weight: bold;
+  display: block;
+  border-top: 1px dashed rgba(26, 26, 36, 0.2);
+  padding-top: 8px;
+}
+.machine-option:hover {
+  background: #ffffff;
+  border-color: var(--pixel-pink);
+  box-shadow: 4px 4px 0px var(--pixel-black);
+}
+
+/* 具体机台总览 */
+.machine-toolbar {
+  max-width: 1200px;
+  margin: 30px auto 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.8fr) 1.2fr;
+  gap: 18px;
+  align-items: start;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+}
+.search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: bold;
+  color: var(--pixel-black);
+  font-size: 12px;
+}
+.search-box span {
+  color: var(--pixel-pink);
+}
+.search-box input {
+  width: 100%;
+  min-height: 42px;
+  border: 3px solid var(--pixel-black);
+  background: var(--bg-color);
+  color: var(--pixel-black);
+  padding: 8px 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: bold;
+  outline: none;
+}
+.search-box input:focus {
+  background: #fff;
+  box-shadow: 3px 3px 0 var(--pixel-pink);
+}
+.type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.type-filter button {
+  min-height: 36px;
+  border: 2px solid var(--pixel-black);
+  background: var(--bg-color);
+  color: var(--pixel-black);
+  padding: 6px 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 2px 2px 0 var(--pixel-black);
+}
+.type-filter button.active,
+.type-filter button:hover {
+  color: #fff;
+  background: var(--pixel-pink);
+}
+.machine-index {
+  max-width: 1200px;
+  margin: 34px auto 70px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+.machine-card {
+  min-height: 230px;
+  display: flex;
+  flex-direction: column;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  padding: 22px;
+  box-shadow: var(--pixel-shadow);
+  transition: transform 0.05s steps(1), box-shadow 0.05s steps(1);
+}
+.machine-card span {
+  align-self: flex-start;
+  color: #fff;
+  background: var(--pixel-pink);
+  border: 2px solid var(--pixel-black);
+  padding: 2px 6px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: bold;
+}
+.machine-card h2 {
+  color: var(--pixel-black);
+  font-size: 22px;
+  margin-bottom: 10px;
+  border-bottom: 2px dashed rgba(26, 26, 36, 0.16);
+  padding-bottom: 8px;
+}
+.machine-card p {
+  color: var(--text-sub);
+  font-size: 13px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  flex: 1;
+}
+.machine-card a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: var(--pixel-black);
+  border: 2px solid rgba(255, 0, 127, 0.26);
+  background: rgba(255, 0, 127, 0.12);
+  padding: 9px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 3px 3px 0 var(--pixel-black);
+}
+.machine-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--card-shadow-hover);
+}
+.machine-card a:hover {
+  color: #fff;
+  background: var(--pixel-pink);
+}
+.type-card.is-hidden,
+.machine-card.is-hidden,
+.search-empty[hidden] {
+  display: none !important;
+}
+.search-empty {
+  grid-column: 1 / -1;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+  padding: 24px;
+  color: var(--text-sub);
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* 机台详情页 */
+.machine-detail-hero {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 40px;
+  align-items: stretch;
+}
+.machine-identity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.machine-identity p {
+  color: var(--text-sub);
+  font-size: 14px;
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+.text-link {
+  width: fit-content;
+  display: inline-block;
+  color: var(--pixel-black);
+  background: var(--pixel-yellow);
+  border: 2px solid var(--pixel-black);
+  box-shadow: 3px 3px 0 var(--pixel-black);
+  padding: 8px 12px;
+  margin: 0 10px 10px 0;
+  font-size: 13px;
+  font-weight: bold;
+  text-decoration: none;
+}
+.text-link:hover {
+  color: #fff;
+  background: var(--pixel-pink);
+}
+.detail-cover-slot {
+  min-height: 320px;
+}
+.machine-detail-layout {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+}
+.detail-section {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+  padding: 24px;
+}
+.detail-section h2 {
+  color: var(--pixel-black);
+  font-size: 20px;
+  margin: 6px 0 12px 0;
+}
+.detail-section p {
+  color: var(--text-sub);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.spec-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.spec-tags span {
+  color: var(--pixel-black);
+  background: var(--bg-color);
+  border: 2px solid var(--pixel-black);
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 2px 2px 0 var(--pixel-black);
+}
+.detail-gallery {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+/* 覆盖：机台详情视觉区优化（移除素材区后的主次布局） */
+.detail-cover-slot {
+  padding: 0; /* 直接显示图片，去除内部多余空白 */
+  min-height: 420px;
+  display: block;
+}
+.detail-cover-slot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.detail-cover-slot::before { display: none; } /* 去掉 INSERT COIN 标记，避免干扰 */
+
+/* 保证机器图片区主次分明：主图更高、更醒目，右侧缩略图整齐排列 */
+.machine-image-grid {
+  grid-template-columns: 1.8fr 0.8fr;
+  gap: 26px;
+}
+.machine-image-grid .main-image { min-height: 520px; }
+.sub-image-grid { display: grid; grid-auto-rows: 1fr; gap: 18px; }
+.sub-image { min-height: 140px; overflow: hidden; }
+.sub-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* 响应式：手机端转为单列，保持主次 */
+@media (max-width: 820px) {
+  .machine-detail-hero { grid-template-columns: 1fr; }
+  .machine-image-grid { grid-template-columns: 1fr; }
+  .machine-image-grid .main-image { min-height: 360px; }
+  .sub-image { min-height: 120px; }
+}
+.detail-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+.gallery-slot {
+  min-height: 190px;
+  padding: 24px;
+}
+
+/* 画廊页：历史简介 + Pinterest 图片墙 */
+.gallery-history-hero {
+  align-items: stretch;
+}
+.gallery-history-hero p + p {
+  margin-top: 12px;
+}
+.history-card {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.history-card span {
+  align-self: flex-start;
+  color: #fff;
+  background: var(--pixel-pink);
+  border: 2px solid var(--pixel-black);
+  padding: 2px 8px;
+  margin-bottom: 18px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.history-card ol {
+  list-style-position: inside;
+}
+.history-card li {
+  color: var(--text-sub);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+.gallery-loop {
+  max-width: 1200px;
+  margin: 30px auto 34px auto;
+  overflow: hidden;
+  border-top: 4px solid var(--pixel-black);
+  border-bottom: 4px solid var(--pixel-black);
+  background: var(--panel-bg);
+}
+.gallery-loop-track {
+  width: max-content;
+  display: flex;
+  gap: 10px;
+  padding: 12px 0;
+  animation: galleryTicker 24s linear infinite;
+}
+.gallery-loop-track span {
+  color: var(--pixel-black);
+  background: var(--pixel-yellow);
+  border: 2px solid var(--pixel-black);
+  box-shadow: 2px 2px 0 var(--pixel-black);
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+@keyframes galleryTicker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.pinterest-gallery {
+  max-width: 1200px;
+  margin: 0 auto 80px auto;
+  padding: 0 20px;
+  column-count: 4;
+  column-gap: 22px;
+}
+.pin-slot {
+  margin: 0 0 22px 0;
+  break-inside: avoid;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+  border: 2px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+  padding: 2px;
+}
+.pin-slot::before,
+.pin-slot::after {
+  content: none;
+}
+.pin-slot span,
+.pin-slot strong {
+  display: none !important;
+}
+.pin-short,
+.pin-mid,
+.pin-tall,
+.pin-wide {
+  min-height: auto !important;
+  height: auto !important;
+}
+.pin-slot.is-live {
+  background:
+    linear-gradient(rgba(255,255,255,0.76), rgba(255,255,255,0.9)),
+    repeating-linear-gradient(135deg, rgba(255,0,127,0.34) 0 8px, rgba(255,204,0,0.22) 8px 16px);
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* 画廊图片：让图片填充卡片并移除文字标注显示 */
+.pin-slot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.pin-slot span,
+.pin-slot strong {
+  display: none !important;
+}
+
+/* ==========================================
+   6. 入门页与画廊页专用类名补全
+   ========================================== */
+.guide-layout, .gallery-wall {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.guide-card, .gallery-card {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  padding: 24px;
+  box-shadow: var(--pixel-shadow);
+}
+.guide-card span {
+  font-size: 24px;
+  font-weight: bold;
+  color: var(--pixel-pink);
+  display: block;
+  margin-bottom: 8px;
+}
+.guide-card h2, .gallery-card h2 {
+  font-size: 18px;
+  color: var(--pixel-black);
+  margin-bottom: 8px;
+
+/* 公司选择面板与按钮（categories 页面） */
+.company-grid { max-width: 1200px; margin: 40px auto; padding: 24px; display: block; }
+.company-intro-panel { background: var(--panel-bg); border: 4px solid var(--pixel-pink); padding: 22px; box-shadow: 6px 6px 0 rgba(26,26,36,0.12); margin-bottom: 20px; }
+.company-intro-panel .section-label { color: var(--text-sub); font-weight: bold; }
+.company-intro-panel h2 { margin: 6px 0 10px; font-size: 28px; color: var(--pixel-black); }
+.company-intro-panel p { color: var(--text-sub); line-height: 1.6; }
+
+.company-buttons { display:flex; gap:18px; align-items:center; padding: 10px 6px; }
+.company-buttons .company-btn { display:inline-flex; align-items:center; gap:12px; text-decoration:none; color: var(--pixel-black); background: var(--panel-bg); border: 4px solid var(--pixel-black); padding: 14px 22px; font-weight:bold; font-size:18px; box-shadow: var(--pixel-shadow); transition: transform 0.06s steps(1), box-shadow 0.06s steps(1); }
+.company-buttons .company-btn:hover { transform: translate(-6px,-6px); box-shadow: 10px 10px 0 var(--pixel-pink); color:#fff; border-color:var(--pixel-black); }
+.company-icon { width:32px; height:32px; display:inline-block; background-size:contain; background-repeat:no-repeat; image-rendering:pixelated; }
+.company-label { display:inline-block; vertical-align:middle; }
+
+/* company color variants */
+:root {
+  --sega-blue: #0077cc;
+  --bemani-purple: #8a2be2;
+  --other-gray: #6b6b6b;
+}
+.company-btn--sega { background: linear-gradient(180deg, #e8f4ff, #dff0ff); border-color: var(--sega-blue); color: var(--sega-blue); }
+.company-btn--sega .company-icon--sega { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' fill='%230077cc'/%3E%3Ctext x='50%25' y='58%25' font-size='18' font-family='VT323,monospace' fill='%23fff' text-anchor='middle'%3ES%3C/text%3E%3C/svg%3E"); }
+.company-btn--bemani { background: linear-gradient(180deg, #f3e8ff, #efe0ff); border-color: var(--bemani-purple); color: var(--bemani-purple); }
+.company-btn--bemani .company-icon--bemani { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' fill='%238a2be2'/%3E%3Ctext x='50%25' y='58%25' font-size='18' font-family='VT323,monospace' fill='%23fff' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E"); }
+.company-btn--other { background: linear-gradient(180deg, #f2f2f2, #e9e9e9); border-color: var(--other-gray); color: var(--other-gray); }
+.company-btn--other .company-icon--other { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Crect width='32' height='32' fill='%236b6b6b'/%3E%3Ctext x='50%25' y='58%25' font-size='18' font-family='VT323,monospace' fill='%23fff' text-anchor='middle'%3EO%3C/text%3E%3C/svg%3E"); }
+
+.company-btn--sega:hover { background: var(--sega-blue); }
+.company-btn--bemani:hover { background: var(--bemani-purple); }
+.company-btn--other:hover { background: var(--other-gray); }
+
+/* 小屏幕调整 */
+@media (max-width: 760px) {
+  .company-buttons { flex-direction: column; gap:12px; }
+  .company-buttons .company-btn { width: 100%; text-align:center; padding: 12px 16px; font-size:16px; }
+}
+
+/* 强制覆盖：确保公司按钮在任何情况下都可见（处理样式冲突或缓存问题） */
+body.category-page .company-buttons .company-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 14px 24px !important;
+  font-size: 18px !important;
+  text-decoration: none !important;
+  color: var(--pixel-black) !important;
+  background: var(--panel-bg) !important;
+  border: 4px solid var(--pixel-black) !important;
+  box-shadow: var(--pixel-shadow) !important;
+}
+body.category-page .company-buttons .company-btn .company-icon {
+  display: inline-block !important;
+  width: 32px !important;
+  height: 32px !important;
+  background-size: contain !important;
+}
+
+/* 如果浏览器缓存旧样式导致按钮显示为链接（默认蓝色），用下面覆盖颜色 */
+body.category-page .company-btn--sega { color: var(--sega-blue) !important; }
+body.category-page .company-btn--bemani { color: var(--bemani-purple) !important; }
+body.category-page .company-btn--other { color: var(--other-gray) !important; }
+}
+.guide-card p, .gallery-card p {
+  font-size: 13px;
+  color: var(--text-sub);
+  line-height: 1.5;
+}
+.beginner-flow, .timeline-board, .recommend-board {
+  max-width: 1200px;
+  margin: 50px auto;
+  padding: 30px 20px;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+}
+.flow-line, .timeline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+.flow-line span, .timeline span {
+  background: var(--bg-color);
+  border: 2px solid var(--pixel-black);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: bold;
+}
+.recommend-list {
+  margin-top: 20px;
+  padding-left: 20px;
+}
+.recommend-list li {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: var(--pixel-black);
+}
+.recommend-list li strong { color: var(--pixel-pink); margin-right: 8px; }
+.recommend-list li span { color: var(--text-sub); font-size: 13px; }
+
+.resource-strip {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-black);
+  box-shadow: var(--pixel-shadow);
+}
+.resource-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--pixel-black);
+  font-weight: bold;
+  text-decoration: none;
+  border: 2px solid rgba(255, 0, 127, 0.26);
+  padding: 8px 16px;
+  background: rgba(255, 0, 127, 0.12);
+}
+
+/* 路径条 */
+.path-strip {
+  max-width: 1200px;
+  margin: 30px auto 10px auto;
+  padding: 12px 20px;
+  background: var(--panel-bg);
+  border: 2px solid var(--pixel-black);
+  font-size: 13px;
+  font-weight: bold;
+}
+.path-strip span:not(:last-child)::after {
+  content: " ► ";
+  color: var(--pixel-pink);
+  padding: 0 6px;
+}
+
+/* =========================================================
+   【重要升级】子页面彻底统一成首页同款“粉色像素杂志框架”
+   ========================================================= */
+.site-page main {
+  width: min(1200px, calc(100vw - 48px));
+  margin: 40px auto 64px;
+  padding: 34px 30px 46px;
+  position: relative;
+  background: #f7f7f7;
+  background-image:
+    linear-gradient(rgba(26, 26, 36, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.04) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 4px solid var(--pixel-pink);
+  box-shadow: 8px 8px 0 var(--pixel-black);
+}
+.site-page main::before,
+.site-page main::after {
+  display: none;
+}
+
+/* 清除子页面内部元素的局限，融入大框架 */
+.site-page .path-strip,
+.site-page .page-hero,
+.site-page .category-grid,
+.site-page .type-machine-board,
+.site-page .machine-toolbar,
+.site-page .machine-index,
+.site-page .machine-detail-hero,
+.site-page .machine-detail-layout,
+.site-page .detail-gallery,
+.site-page .guide-layout,
+.site-page .beginner-flow,
+.site-page .timeline-board,
+.site-page .recommend-board,
+.site-page .resource-strip,
+.site-page .gallery-loop,
+.site-page .pinterest-gallery {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* 子页面的 Hero 顶部模块：去掉外框以匹配首页简洁风格 */
+.site-page .page-hero,
+.site-page .machine-detail-hero {
+  margin-top: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  align-items: start;
+}
+
+/* 核心一：子页面大标题同步首页的厚重 3D 感与黑粉斑马线 */
+.site-page .page-hero h1,
+.site-page .machine-identity h1 {
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1.06;
+  color: var(--pixel-black);
+  text-transform: none;
+  text-shadow: none;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* 子页面标题下方不再使用重斑马线装饰 */
+.site-page .page-hero h1::after,
+.site-page .machine-identity h1::after {
+  content: none;
+}
+
+.site-page .eyebrow {
+  width: fit-content;
+  color: var(--pixel-black);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin-bottom: 18px;
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.04em;
+}
+.site-page .path-strip {
+  margin-bottom: 18px;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+}
+
+/* 核心二：子页面所有卡片边框、阴影与首页 .home-entry-card 完全一致 */
+.site-page .category-card,
+.site-page .machine-card,
+.site-page .guide-card,
+.site-page .gallery-card,
+.site-page .history-card,
+.site-page .detail-section,
+.site-page .visual-slot,
+.site-page .type-machine-board,
+.site-page .machine-toolbar,
+.site-page .beginner-flow,
+.site-page .timeline-board,
+.site-page .recommend-board,
+.site-page .resource-strip,
+.site-page .pin-slot {
+  background: var(--panel-bg);
+  border: 4px solid rgba(255, 0, 127, 0.26); /* 对标首页粉边 */
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.16); /* 对标首页轻黑影 */
+}
+
+/* 核心三：补回子页面的 Hover 跳动与底部按钮完美对齐 */
+.site-page .category-card,
+.site-page .machine-card,
+.site-page .guide-card,
+.site-page .gallery-card,
+.site-page .machine-option {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.05s steps(1), box-shadow 0.05s steps(1);
+}
+
+/* 将卡片内文字段落自动拉伸，使得底部按钮沉底对齐 */
+.site-page .category-card p:last-of-type,
+.site-page .machine-card p:last-of-type,
+.site-page .guide-card p:last-of-type {
+  flex-grow: 1;
+  margin-bottom: 24px;
+}
+
+/* 统一悬停高亮粉色特效 */
+.site-page .category-card:hover,
+.site-page .machine-card:hover,
+.site-page .guide-card:hover,
+.site-page .gallery-card:hover,
+.site-page .machine-option:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: 6px 6px 0px var(--pixel-pink); /* 悬停粉色高亮 */
+  background: rgba(255, 0, 127, 0.05); /* 悬停时微微泛粉 */
+}
+
+/* 卡片网格间距设定 */
+.site-page .category-grid,
+.site-page .machine-index,
+.site-page .guide-layout,
+.site-page .gallery-wall,
+.site-page .machine-detail-layout,
+.site-page .detail-gallery-grid {
+  gap: 26px;
+}
+.site-page .gallery-loop {
+  margin-top: 32px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ==========================================
+   7. 公共页脚与动画
+   ========================================== */
+.site-footer {
+  background: var(--pixel-black);
+  color: #fff;
+  padding: 40px 20px;
+  margin-top: 100px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.reveal {
+  animation: pixelFade 0.2s steps(2) forwards;
+}
+@keyframes pixelFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* ==========================================
+   首页专用：纯 CSS 像素风吉祥物小人
+   ========================================== */
+.pixel-avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  position: relative;
+}
+
+/* 纯 CSS 用 SVG 拼接绘制的黑粉街机像素小人（1P 节奏酱） */
+.pixel-avatar {
+  width: 64px;
+  height: 64px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' style='image-rendering:pixelated;'%3E%3C!-- 头发 --%3E%3Cpath d='M4,1 H12 V2 H13 V5 H12 V3 H4 V5 H3 V2 H4 Z' fill='%23ff007f'/%3E%3C!-- 耳机 --%3E%3Cpath d='M2,5 H3 V9 H2 Z M13,5 H14 V9 H13 Z M3,4 H13 V5 H3 Z' fill='%231a1a24'/%3E%3C!-- 脸 --%3E%3Cpath d='M3,5 H13 V10 H12 V11 H4 V10 H3 Z' fill='%23fff'/%3E%3C!-- 眼睛 --%3E%3Cpath d='M5,7 H7 V8 H5 Z M9,7 H11 V8 H9 Z' fill='%23ff007f'/%3E%3C!-- 腮红 --%3E%3Cpath d='M4,8 H5 V9 H4 Z M11,8 H12 V9 H11 Z' fill='%23ffcc00'/%3E%3C!-- 衣服与领结 --%3E%3Cpath d='M4,11 H12 V14 H4 Z' fill='%231a1a24'/%3E%3Cpath d='M7,11 H9 V12 H7 Z' fill='%23ff007f'/%3E%3C!-- 手/手套 --%3E%3Cpath d='M2,12 H4 V14 H2 Z M12,12 H14 V14 H12 Z' fill='%23ff007f'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  /* 赋予像素特有的上下跳动律动感 */
+  animation: pixelBounce 0.6s steps(2) infinite; 
+}
+
+/* 小人下方的像素投影 */
+.pixel-avatar-shadow {
+  width: 48px;
+  height: 6px;
+  background: rgba(26, 26, 36, 0.2);
+  margin-top: 4px;
+  animation: shadowScale 0.6s steps(2) infinite;
+}
+
+/* 小人的像素气泡对话框 */
+.pixel-bubble {
+  background: #ffffff;
+  border: 3px solid var(--pixel-black);
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--pixel-black);
+  margin-bottom: 12px;
+  position: relative;
+  box-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+  text-align: center;
+}
+/* 对话框的小箭头 */
+.pixel-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -9px; left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px 6px 0;
+  border-style: solid;
+  border-color: #ffffff transparent;
+  display: block;
+  width: 0; z-index: 2;
+}
+.pixel-bubble::before {
+  content: "";
+  position: absolute;
+  bottom: -13px; left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: var(--pixel-black) transparent;
+  display: block;
+  width: 0; z-index: 1;
+}
+
+/* 律动动画 */
+@keyframes pixelBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes shadowScale {
+  0%, 100% { transform: scaleX(1); opacity: 1; }
+  50% { transform: scaleX(0.8); opacity: 0.6; }
+}
+
+
+/* ==========================================
+   全站动态：鼠标点击爆开的像素颗粒样式
+   ========================================== */
+.click-pixel {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  pointer-events: none; /* 确保不影响鼠标点击穿透 */
+  z-index: 10000;
+  animation: pixelSplatter 0.45s steps(3) forwards;
+}
+
+@keyframes pixelSplatter {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    /* 每一个颗粒通过 JS 赋予不同的偏移方向，这里提供一个基础下落趋势 */
+    transform: translate(var(--dx), var(--dy)) scale(0);
+    opacity: 0;
+  }
+} 
+/* ==========================================
+   像素风音乐播放控制按钮
+   ========================================== */
+.pixel-music-box {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10001; /* 确保悬浮在最上层 */
+}
+
+.music-toggle-btn {
+  background-color: var(--panel-bg);
+  color: var(--pixel-black);
+  border: 3px solid var(--pixel-black);
+  padding: 8px 14px;
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  box-shadow: 4px 4px 0px var(--pixel-black);
+  transition: transform 0.05s steps(1);
+}
+
+.music-toggle-btn:hover {
+  background-color: var(--pixel-pink);
+  color: #ffffff;
+  box-shadow: 4px 4px 0px var(--pixel-yellow);
+}
+
+.music-toggle-btn.playing {
+  background-color: var(--pixel-black);
+  color: var(--pixel-pink);
+  box-shadow: 4px 4px 0px var(--pixel-pink);
+  border-color: var(--pixel-pink);
+}
+.pixel-status {
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.pixel-bar {
+  display: flex;
+  gap: 2px;
+  margin-left: 8px;
+}
+.pixel-bar span {
+  width: 8px;
+  height: 12px;
+  background: #dddddd;
+  border: 1px solid var(--pixel-black);
+}
+/* 激活的点亮状态 */
+.pixel-bar span.active {
+  background: var(--pixel-pink);
+}
+.marquee-border {
+  background-image: linear-gradient(90deg, var(--pixel-pink) 50%, transparent 50%),
+                    linear-gradient(90deg, var(--pixel-pink) 50%, transparent 50%),
+                    linear-gradient(0deg, var(--pixel-pink) 50%, transparent 50%),
+                    linear-gradient(0deg, var(--pixel-pink) 50%, transparent 50%);
+  background-repeat: repeat-x, repeat-x, repeat-y, repeat-y;
+  background-size: 8px 3px, 8px 3px, 3px 8px, 3px 8px;
+  background-position: 0 0,  0 100%, 0 0, 100% 0;
+  animation: marquee 0.3s linear infinite;
+}
+@keyframes marquee {
+  0% { background-position: 0 0, 100% 100%, 0 100%, 100% 0; }
+  100% { background-position: 8px 0, 92px 100%, 0 92px, 100% 8px; }
+}
+#pixel-flow-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: -2; /* 沉在最底下 */
+  pointer-events: none; /* 鼠标点穿，不影响页面点击 */
+  opacity: 0.08; /* 保持低透明度，防止太耀眼影响看字 */
+}
+/* ==========================================
+   首页中文字体：升级为纯正“黑字粉底”硬核立体效果
+   ========================================== */
+.cover-arcade-title-zh {
+  margin: 25px 0 15px 0;
+  padding: 5px 0;
+  overflow: visible;
+  position: relative;
+}
+
+.pixel-heavy-title {
+  /* 保持特大号响应式中文字体 */
+  font-size: clamp(2.8rem, 6vw, 4.5rem); 
+  font-weight: 900; 
+  line-height: 1.1;
+  letter-spacing: 0;
+  
+  /* 核心修改：将文字主体颜色完全改为网站的硬核主黑色 */
+  color: var(--pixel-black); 
+  
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  position: relative;
+  display: inline-block;
+  
+  /* 完美的黑粉层级阴影：第一层亮粉 -> 第二层深粉 -> 第三层纯黑沉底 */
+  text-shadow: 
+    3px 3px 0px var(--pixel-pink), 
+    6px 6px 0px #b30059,  
+    9px 9px 0px var(--pixel-black); 
+    
+  /* 保持音游专属的硬核两帧拍频律动 */
+  animation: titleBeat 0.8s steps(2) infinite;
+}
+
+/* 利用伪元素在后方加一层粉色强力描边，确保黑字在任何背景下都能被粉色逼格衬托出来 */
+.pixel-heavy-title::before {
+  content: attr(data-text);
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--pixel-pink);
+  z-index: -1;
+  opacity: 0.9;
+}
+
+/* 下方的像素能量判定条：保持极简黑粉斑马线风格 */
+.cover-arcade-title-zh::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pixel-pink),
+    var(--pixel-pink) 15px,
+    var(--pixel-black) 15px,
+    var(--pixel-black) 30px
+  );
+  margin-top: 12px;
+  box-shadow: 3px 3px 0px var(--pixel-pink);
+}
+
+/* 动效微调：震动时微调黑粉阴影，做出复古街机屏幕通电的跳跃感 */
+@keyframes titleBeat {
+  0%, 100% {
+    transform: scale(1) rotate(-0.5deg);
+  }
+  50% {
+    transform: scale(1.02) rotate(0.5deg);
+    text-shadow: 
+      4px 4px 0px var(--pixel-pink), 
+      7px 7px 0px #b30059,
+      10px 10px 0px var(--pixel-black);
+  }
+}
+@media screen and (max-width: 1100px) {
+  .machine-detail-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pinterest-gallery {
+    column-count: 3;
+  }
+
+  .home-entry-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  .home-entry-card {
+    min-height: auto;
+  }
+
+  .home-poster {
+    padding: 176px 30px 64px;
+  }
+
+  .poster-wave {
+    left: 0;
+    right: 0;
+    top: 94px;
+  }
+
+  .home-poster-page {
+    min-height: auto;
+    padding: 42px 34px 48px;
+  }
+
+  .home-poster-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+
+  .home-poster-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 900px) {
+  .pinterest-gallery {
+    column-count: 2;
+  }
+}
+/* ==========================================
+   移动端适配
+   ========================================== */
+@media screen and (max-width: 768px) {
+  
+  /* 1. 标题字号安全缩减：防止大字撑破手机屏幕 */
+  .pixel-heavy-title {
+    font-size: clamp(1.8rem, 8vw, 2.5rem) !important; /* 调低手机端最大与最小值 */
+    letter-spacing: 0 !important;
+    text-shadow: 
+      2px 2px 0px var(--pixel-pink), 
+      4px 4px 0px #b30059,  
+      6px 6px 0px var(--pixel-black) !important; /* 减弱手机端的阴影厚度，防止太糊 */
+  }
+  
+  .cover-title {
+    font-size: 10vw !important; /* 英文大标题等比缩放 */
+  }
+
+  .home-title-lockup {
+    margin: 0 0 28px 0;
+    padding: 0;
+  }
+
+  .poster-mini-nav {
+    display: none;
+  }
+
+  .home-main-title {
+    font-size: clamp(2.8rem, 14vw, 4.8rem);
+    line-height: 0.86;
+    letter-spacing: -0.11em;
+    text-shadow:
+      0.06em 0 0 var(--pixel-black),
+      0 0.06em 0 var(--pixel-black),
+      0.09em 0.09em 0 #ffffff;
+  }
+
+  /* 移动端：子页面主标题适度缩小，避免过度占屏 */
+  .site-page .page-hero h1,
+  .site-page .machine-identity h1 {
+    font-size: clamp(1.8rem, 8.5vw, 2.4rem) !important;
+    text-shadow: 2px 2px 0px var(--pixel-pink), 4px 4px 0px var(--pixel-black) !important;
+  }
+
+  .home-main-title span:nth-child(2) {
+    letter-spacing: -0.11em;
+    text-shadow:
+      0.06em 0 0 var(--pixel-black),
+      0 0.06em 0 var(--pixel-black),
+      0.09em 0.09em 0 #ffffff;
+  }
+
+  .home-title-meta {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .home-main {
+    padding: 0 0 64px;
+  }
+
+  .home-poster {
+    padding: 146px 0 46px;
+    box-shadow: none;
+  }
+
+  .poster-wave {
+    left: -12px;
+    right: -12px;
+    top: 78px;
+    height: 84px;
+    background:
+      linear-gradient(135deg, transparent 25%, var(--pixel-pink) 25% 50%, transparent 50%) 0 0 / 18px 18px repeat-x,
+      linear-gradient(225deg, transparent 25%, var(--pixel-pink) 25% 50%, transparent 50%) 9px 10px / 18px 18px repeat-x,
+      linear-gradient(var(--pixel-pink), var(--pixel-pink)) bottom / 100% 54px no-repeat;
+  }
+
+  .home-poster-copy {
+    margin-bottom: 38px;
+  }
+
+  .home-poster-page {
+    padding: 58px 18px 34px;
+  }
+
+  .home-poster-page::before,
+  .home-poster-page::after {
+    top: 0;
+    bottom: 0;
+    width: 18px;
+    height: auto;
+    border-width: 0;
+  }
+
+  .home-poster-page::before {
+    left: -18px;
+  }
+
+  .home-poster-page::after {
+    right: -18px;
+  }
+
+  /* 2. 杂志大封面由“双列并排”强行降级为“上下单列垂直堆叠” */
+  .cover-layout, .page-hero, .machine-detail-hero, .machine-detail-layout, .machine-toolbar {
+    grid-template-columns: 1fr !important; /* 强制单列 */
+    gap: 24px !important;
+  }
+  
+  /* 让视觉槽（像素小人）在手机上居中显示在文字下方 */
+  .visual-slot {
+    width: 100% !important;
+    padding: 20px !important;
+  }
+
+  /* 3. 页面卡片网格自适应调整 */
+  .home-entry-grid, .category-grid, .guide-layout, .gallery-wall, .machine-option-grid, .machine-index, .detail-gallery-grid {
+    grid-template-columns: 1fr !important; /* 手机端卡片一律单列铺满 */
+    gap: 16px !important;
+  }
+
+  /* 4. 公共导航栏 */
+  .header-inner {
+    flex-direction: row !important;
+    gap: 12px;
+    align-items: center !important;
+    flex-wrap: wrap;
+  }
+  
+  .nav-toggle {
+    display: flex !important;
+    margin-left: auto;
+  }
+  
+  .site-nav {
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding-top: 8px;
+  }
+
+  .site-nav.open {
+    display: flex;
+  }
+  
+  .site-nav a {
+    margin-left: 0 !important;
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    text-align: center;
+    background: var(--panel-bg);
+    border: 2px solid var(--pixel-black);
+  }
+
+  .machine-toolbar {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .type-filter {
+    justify-content: flex-start;
+  }
+
+  .machine-identity h1 {
+    font-size: clamp(2rem, 12vw, 3.2rem);
+  }
+
+  .pinterest-gallery {
+    column-count: 2;
+  }
+
+  .gallery-loop {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .pin-short,
+  .pin-mid,
+  .pin-tall,
+  .pin-wide {
+    min-height: 240px;
+  }
+
+  /* 5. 音乐控制与返回顶部按钮在手机端的位置优化（防止重叠） */
+  .pixel-music-box {
+    bottom: 15px !important;
+    right: 15px !important;
+  }
+  
+  .pixel-track-complete-btn {
+    bottom: 75px !important; /* 往上挪，空出位置给下面的音乐按钮 */
+    right: 15px !important;
+    padding: 6px 10px !important;
+  }
+}
+
+/* =========================================================
+   UI FIX 2026-06-25
+   子页面排版修正版：弱化标题、统一卡片、统一 Type 标签、修正对齐
+   放在 CSS 最后，用于覆盖前面过重/不统一的样式
+   ========================================================= */
+
+:root {
+  --subpage-max: 1160px;
+  --subpage-pad-x: 28px;
+  --subpage-pink-soft: rgba(255, 0, 127, 0.24);
+  --subpage-pink-line: #ff9fcd;
+  --subpage-shadow-soft: 6px 6px 0 rgba(26, 26, 36, 0.12);
+  --subpage-border-soft: 3px solid var(--subpage-pink-line);
+}
+
+/* 1. 子页面整体：去掉过重的大粉框和黑硬阴影，保留像素杂志感但更干净 */
+.site-page main {
+  width: min(var(--subpage-max), calc(100vw - 56px)) !important;
+  margin: 34px auto 64px !important;
+  padding: 32px var(--subpage-pad-x) 44px !important;
+  background-color: #f7f7f7 !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: var(--subpage-shadow-soft) !important;
+  overflow: hidden !important;
+}
+
+/* 2. 路径条：统一高度、边框、内边距，不再像漂浮的厚框 */
+.site-page .path-strip {
+  width: 100% !important;
+  margin: 0 0 24px 0 !important;
+  padding: 12px 16px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  border: 2px solid rgba(26, 26, 36, 0.14) !important;
+  box-shadow: 3px 3px 0 rgba(26, 26, 36, 0.08) !important;
+  color: var(--pixel-black) !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+}
+
+.site-page .path-strip span {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+.site-page .path-strip span:not(:last-child)::after {
+  content: "▶" !important;
+  display: inline-block !important;
+  margin-left: 10px !important;
+  color: var(--pixel-pink) !important;
+  font-size: 11px !important;
+}
+
+/* 3. 子页面标题区：彻底改掉 p1 那种大标题横冲直撞的感觉 */
+.site-page .page-hero,
+.site-page .machine-detail-hero {
+  width: 100% !important;
+  margin: 0 0 34px 0 !important;
+  padding: 26px 30px 28px !important;
+  display: block !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 5px 5px 0 rgba(26, 26, 36, 0.10) !important;
+}
+
+.site-page .page-hero > *,
+.site-page .machine-detail-hero > * {
+  max-width: 820px !important;
+}
+
+.site-page .eyebrow,
+.site-page .machine-identity .eyebrow {
+  min-width: 0 !important;
+  width: fit-content !important;
+  height: auto !important;
+  margin: 0 0 14px 0 !important;
+  padding: 6px 12px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 0, 127, 0.07) !important;
+  border: 2px solid rgba(255, 0, 127, 0.22) !important;
+  box-shadow: 3px 3px 0 rgba(26, 26, 36, 0.08) !important;
+  color: var(--pixel-black) !important;
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.04em !important;
+}
+
+.site-page .page-hero h1,
+.site-page .machine-identity h1 {
+  margin: 0 0 14px 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  color: var(--pixel-black) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: clamp(28px, 3.4vw, 40px) !important;
+  font-weight: 900 !important;
+  line-height: 1.12 !important;
+  letter-spacing: -0.03em !important;
+  text-shadow: none !important;
+  border: none !important;
+}
+
+.site-page .page-hero h1::after,
+.site-page .machine-identity h1::after {
+  content: "" !important;
+  display: block !important;
+  width: 72px !important;
+  height: 3px !important;
+  margin-top: 12px !important;
+  background: var(--subpage-pink-line) !important;
+}
+
+.site-page .page-hero p,
+.site-page .machine-identity p {
+  max-width: 760px !important;
+  margin: 0 !important;
+  color: var(--text-sub) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.85 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* 4. 分类卡片网格：固定同一行三列，避免第三张挤压、错位、露出不完整 */
+.site-page .category-grid {
+  width: 100% !important;
+  margin: 0 0 40px 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 28px !important;
+  align-items: stretch !important;
+  overflow: visible !important;
+}
+
+.site-page .category-card {
+  min-width: 0 !important;
+  min-height: 270px !important;
+  height: 100% !important;
+  padding: 28px 26px 24px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.12) !important;
+  overflow: hidden !important;
+}
+
+/* Type 标签统一尺寸，解决每个框大小不一样的问题 */
+.site-page .card-no,
+.site-page .category-card .card-no {
+  width: 72px !important;
+  height: 30px !important;
+  margin: 0 0 22px 0 !important;
+  padding: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 0 0 auto !important;
+  background: rgba(26, 26, 36, 0.08) !important;
+  border: 2px solid rgba(26, 26, 36, 0.14) !important;
+  color: rgba(26, 26, 36, 0.62) !important;
+  font-family: "VT323", "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: 0.04em !important;
+  white-space: nowrap !important;
+  box-shadow: none !important;
+}
+
+.site-page .category-card h2 {
+  min-height: 58px !important;
+  margin: 0 0 14px 0 !important;
+  padding: 0 0 12px 0 !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  border-bottom: 2px dashed rgba(26, 26, 36, 0.14) !important;
+  color: var(--pixel-black) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 25px !important;
+  font-weight: 900 !important;
+  line-height: 1.18 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.site-page .category-card p {
+  margin: 0 0 20px 0 !important;
+  flex: 1 1 auto !important;
+  color: var(--text-sub) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.75 !important;
+}
+
+/* 5. 机台 chip 和底部按钮：统一高度，底部对齐 */
+.site-page .machine-chip-list {
+  min-height: 40px !important;
+  margin: 0 0 18px 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  align-content: flex-start !important;
+}
+
+.site-page .machine-chip-list a {
+  min-height: 28px !important;
+  padding: 6px 9px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #f6f5f8 !important;
+  border: 2px solid rgba(26, 26, 36, 0.82) !important;
+  box-shadow: 2px 2px 0 rgba(26, 26, 36, 0.18) !important;
+  color: var(--pixel-black) !important;
+  font-size: 12px !important;
+  line-height: 1 !important;
+}
+
+.site-page .category-open,
+.site-page .machine-card a,
+.site-page .resource-link,
+.site-page .text-link {
+  min-height: 38px !important;
+  margin-top: auto !important;
+  padding: 9px 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: rgba(255, 0, 127, 0.09) !important;
+  border: 2px solid rgba(255, 0, 127, 0.30) !important;
+  box-shadow: 3px 3px 0 rgba(26, 26, 36, 0.12) !important;
+  color: var(--pixel-black) !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+}
+
+/* 6. 入门页三块内容：统一宽度、边框、内边距，避免标题/内容左右不齐 */
+.site-page .beginner-flow,
+.site-page .recommend-board,
+.site-page .resource-strip,
+.site-page .timeline-board,
+.site-page .type-machine-board,
+.site-page .machine-toolbar {
+  width: 100% !important;
+  margin: 0 0 34px 0 !important;
+  padding: 26px 28px !important;
+
+/* 强制覆盖：彻底移除子页面顶部的粉色框与文本显示（若仍被其它规则覆盖时生效） */
+.site-page .eyebrow,
+.site-page .path-strip,
+.site-page .page-hero .eyebrow,
+.site-page .page-hero .path-strip {
+  display: none !important;
+  visibility: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 如果需要只隐藏视觉而保留语义（不建议），可以改用下面这条替代规则： */
+/* .site-page .eyebrow, .site-page .path-strip { background: transparent !important; border: none !important; box-shadow: none !important; color: var(--pixel-black) !important; } */
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.12) !important;
+}
+
+.site-page .beginner-flow .eyebrow,
+.site-page .recommend-board .eyebrow,
+.site-page .resource-strip .eyebrow,
+.site-page .timeline-board .eyebrow,
+.site-page .type-machine-board .eyebrow {
+  margin-bottom: 18px !important;
+}
+
+.site-page .beginner-flow h2,
+.site-page .recommend-board h2,
+.site-page .resource-strip h2,
+.site-page .timeline-board h2,
+.site-page .type-machine-board h2,
+.site-page .section-head h2 {
+  margin: 0 0 18px 0 !important;
+  color: var(--pixel-black) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: clamp(24px, 3vw, 32px) !important;
+  font-weight: 900 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -0.02em !important;
+}
+
+.site-page .beginner-flow p,
+.site-page .recommend-board p,
+.site-page .resource-strip p,
+.site-page .timeline-board p,
+.site-page .type-machine-board p {
+  color: var(--text-sub) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.8 !important;
+}
+
+/* 第一次游玩流程按钮统一尺寸与对齐 */
+.site-page .flow-line,
+.site-page .timeline {
+  margin-top: 18px !important;
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(92px, 1fr)) !important;
+  gap: 14px !important;
+}
+
+.site-page .flow-line span,
+.site-page .timeline span {
+  min-height: 42px !important;
+  padding: 8px 10px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: #f8f7fa !important;
+  border: 2px solid rgba(26, 26, 36, 0.86) !important;
+  box-shadow: 2px 2px 0 rgba(26, 26, 36, 0.16) !important;
+  color: var(--pixel-black) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  line-height: 1.15 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+/* 推荐列表：修正文字拥挤、序号和说明对不齐 */
+.site-page .recommend-list {
+  margin: 18px 0 0 0 !important;
+  padding: 0 !important;
+  list-style-position: inside !important;
+}
+
+.site-page .recommend-list li {
+  margin: 0 0 13px 0 !important;
+  color: var(--pixel-black) !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 15px !important;
+  line-height: 1.75 !important;
+}
+
+.site-page .recommend-list li strong {
+  color: var(--pixel-pink) !important;
+  font-weight: 900 !important;
+}
+
+.site-page .recommend-list li span {
+  color: var(--text-sub) !important;
+  font-size: 14px !important;
+}
+
+/* 外部资源按钮不再贴边、尺寸统一 */
+.site-page .resource-link {
+  width: fit-content !important;
+  margin-top: 12px !important;
+  padding-left: 22px !important;
+  padding-right: 22px !important;
+}
+
+/* 7. 机台总览/详情页卡片统一 */
+.site-page .machine-index {
+  width: 100% !important;
+  margin: 0 0 40px 0 !important;
+  padding: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 24px !important;
+}
+
+.site-page .machine-card,
+.site-page .guide-card,
+.site-page .gallery-card,
+.site-page .history-card,
+.site-page .detail-section,
+.site-page .visual-slot,
+.site-page .pin-slot {
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.12) !important;
+}
+
+.site-page .machine-card {
+  min-height: 248px !important;
+  padding: 24px !important;
+}
+
+.site-page .machine-card span {
+  width: fit-content !important;
+  height: 26px !important;
+  padding: 0 8px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border: 0 !important;
+  background: rgba(255, 0, 127, 0.12) !important;
+  color: var(--pixel-pink) !important;
+}
+
+.site-page .machine-card h2 {
+  min-height: 56px !important;
+  margin-bottom: 12px !important;
+  display: flex !important;
+  align-items: flex-end !important;
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 22px !important;
+  font-weight: 900 !important;
+}
+
+.site-page .machine-card p {
+  font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.65 !important;
+}
+
+/* 8. 悬停效果：保留交互反馈，但不要跳得太夸张 */
+.site-page .category-card:hover,
+.site-page .machine-card:hover,
+.site-page .guide-card:hover,
+.site-page .gallery-card:hover,
+.site-page .machine-option:hover,
+.site-page .category-open:hover,
+.site-page .machine-card a:hover,
+.site-page .resource-link:hover,
+.site-page .text-link:hover {
+  transform: translate(-2px, -2px) !important;
+  background: rgba(255, 0, 127, 0.045) !important;
+  box-shadow: 6px 6px 0 rgba(255, 0, 127, 0.28) !important;
+}
+
+.site-page .category-open:hover,
+.site-page .machine-card a:hover,
+.site-page .resource-link:hover,
+.site-page .text-link:hover {
+  color: var(--pixel-black) !important;
+  border-color: rgba(255, 0, 127, 0.55) !important;
+}
+
+/* 9. 响应式：平板两列，手机单列，避免任何横向溢出 */
+@media screen and (max-width: 1100px) {
+  .site-page .category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .site-page .machine-index {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .site-page .flow-line,
+  .site-page .timeline {
+    grid-template-columns: repeat(3, minmax(92px, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-page main {
+    width: min(100% - 24px, var(--subpage-max)) !important;
+    margin-top: 18px !important;
+    padding: 20px 14px 34px !important;
+  }
+
+  .site-page .page-hero,
+  .site-page .machine-detail-hero,
+  .site-page .beginner-flow,
+  .site-page .recommend-board,
+  .site-page .resource-strip,
+  .site-page .timeline-board,
+  .site-page .type-machine-board,
+  .site-page .machine-toolbar {
+    padding: 20px 18px !important;
+  }
+
+  .site-page .page-hero h1,
+  .site-page .machine-identity h1 {
+    font-size: clamp(26px, 8.2vw, 34px) !important;
+    text-shadow: none !important;
+  }
+
+  .site-page .category-grid,
+  .site-page .machine-index,
+  .site-page .flow-line,
+  .site-page .timeline {
+    grid-template-columns: 1fr !important;
+  }
+
+  .site-page .category-card {
+    min-height: auto !important;
+  }
+
+  .site-page .category-card h2,
+  .site-page .machine-card h2 {
+    min-height: auto !important;
+  }
+
+  .site-page .path-strip {
+    font-size: 13px !important;
+    gap: 6px !important;
+  }
+
+  .site-page .flow-line span,
+  .site-page .timeline span {
+    white-space: normal !important;
+  }
+}
+
+/* ====== 强制全局覆盖：彻底删除子页面顶部徽章与路径框 ====== */
+/* 说明：某些早期规则使用了 !important 或者未加 .site-page 限定，
+   因此在 CSS 最末尾再次以更高优先级覆盖，确保视觉元素被隐藏。 */
+.eyebrow,
+.path-strip,
+.page-hero .eyebrow,
+.page-hero .path-strip {
+  display: none !important;
+  visibility: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 清除 page-hero 容器的视觉占位与内边距，避免隐藏后仍留空白 */
+.page-hero,
+.site-page .page-hero,
+.machine-detail-hero,
+.site-page .machine-detail-hero {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 0 8px 0 !important;
+}
+
+/* 规范化主标题（以免伪元素或下划线在其他规则中仍然显示） */
+.page-hero h1,
+.site-page .page-hero h1,
+.machine-identity h1 {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: var(--pixel-black) !important;
+  padding: 0 !important;
+  margin: 6px 0 12px 0 !important;
+}
+
+/* Category title background image */
+.category-page .page-hero {
+  min-height: 230px !important;
+  margin: 0 0 28px 0 !important;
+  padding: 40px 40px 42px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background:
+    linear-gradient(rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    #fbfbfd !important;
+  background-size: 18px 18px, 18px 18px, auto !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.1) !important;
+}
+
+.category-page .page-hero::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: url("../assets/images/category-title-bg.jpg") right center / auto 100% no-repeat !important;
+  opacity: 0.58 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  filter: saturate(1.12) contrast(1.02) !important;
+}
+
+.category-page .page-hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(90deg, #fbfbfd 0%, #fbfbfd 43%, rgba(251, 251, 253, 0.88) 49%, rgba(251, 251, 253, 0.44) 58%, rgba(251, 251, 253, 0.1) 68%, rgba(251, 251, 253, 0) 78%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.18)) !important;
+  pointer-events: none !important;
+}
+
+.category-page .page-hero > div:first-child {
+  max-width: 680px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.category-page .page-hero .page-slot {
+  display: none !important;
+}
+
+@media screen and (max-width: 768px) {
+  .category-page .page-hero {
+    min-height: 230px !important;
+    padding: 26px 20px 96px !important;
+  }
+
+  .category-page .page-hero::before {
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background:
+      linear-gradient(90deg, #fbfbfd 0%, rgba(251, 251, 253, 0.92) 22%, rgba(251, 251, 253, 0.55) 42%, rgba(251, 251, 253, 0.08) 68%),
+      url("../assets/images/category-title-bg.jpg") right center / auto 100% no-repeat !important;
+    opacity: 0.44 !important;
+  }
+}
+
+/* Machines title background image */
+.machines-page .page-hero {
+  min-height: 230px !important;
+  margin: 0 0 28px 0 !important;
+  padding: 40px 40px 42px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  background:
+    linear-gradient(rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    #fbfbfd !important;
+  background-size: 18px 18px, 18px 18px, auto !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.1) !important;
+}
+
+.machines-page .page-hero::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: url("../assets/images/machines-title-bg-wide.png") right center / auto 100% no-repeat !important;
+  opacity: 0.58 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  filter: saturate(1.08) contrast(1.02) !important;
+}
+
+.machines-page .page-hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(90deg, #fbfbfd 0%, #fbfbfd 43%, rgba(251, 251, 253, 0.88) 49%, rgba(251, 251, 253, 0.44) 58%, rgba(251, 251, 253, 0.1) 68%, rgba(251, 251, 253, 0) 78%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.18)) !important;
+  pointer-events: none !important;
+}
+
+.machines-page .page-hero > div:first-child {
+  width: auto !important;
+  max-width: 680px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.machines-page .page-hero > div:first-child p {
+  max-width: 100% !important;
+}
+
+.machines-page .page-hero .page-slot {
+  display: none !important;
+}
+
+/* Keep every subpage hero text inside the left safe area */
+.site-page .page-hero > div:first-child {
+  width: min(40%, 540px) !important;
+  max-width: 540px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.site-page .page-hero > div:first-child p {
+  max-width: 100% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .machines-page .page-hero {
+    min-height: 230px !important;
+    padding: 26px 20px 96px !important;
+  }
+
+  .machines-page .page-hero::before {
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background:
+      linear-gradient(90deg, #fbfbfd 0%, rgba(251, 251, 253, 0.92) 22%, rgba(251, 251, 253, 0.55) 42%, rgba(251, 251, 253, 0.08) 68%),
+      url("../assets/images/machines-title-bg-wide.png") right center / auto 100% no-repeat !important;
+    opacity: 0.44 !important;
+  }
+
+  .machines-page .page-hero > div:first-child {
+    width: 100% !important;
+    max-width: 420px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-page .page-hero > div:first-child {
+    width: 100% !important;
+    max-width: 420px !important;
+  }
+}
+
+/* Machine image layout refresh */
+.site-page .machine-index {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  align-items: stretch !important;
+}
+
+.site-page .machine-card {
+  min-height: 0 !important;
+  padding: 18px !important;
+  overflow: hidden !important;
+}
+
+.machine-card-visual {
+  width: 100% !important;
+  aspect-ratio: 4 / 3 !important;
+  margin: 0 0 16px 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background:
+    linear-gradient(rgba(26, 26, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.05) 1px, transparent 1px),
+    #fbfbfd !important;
+  background-size: 14px 14px !important;
+  border: 2px solid rgba(26, 26, 36, 0.18) !important;
+  overflow: hidden !important;
+}
+
+.machine-card-visual img {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  padding: 8px !important;
+  filter: drop-shadow(8px 8px 0 rgba(26, 26, 36, 0.12)) !important;
+}
+
+.site-page .machine-card.has-machine-image h2 {
+  min-height: auto !important;
+}
+
+.site-page .machine-detail-hero {
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 260px) !important;
+  gap: 24px !important;
+  align-items: start !important;
+  margin-bottom: 24px !important;
+}
+
+.site-page .detail-cover-slot {
+  width: 100% !important;
+  max-width: 260px !important;
+  min-height: 220px !important;
+  aspect-ratio: 4 / 5 !important;
+  padding: 0 !important;
+  display: grid !important;
+  place-items: center !important;
+  background:
+    linear-gradient(rgba(26, 26, 36, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.05) 1px, transparent 1px),
+    #fbfbfd !important;
+  background-size: 16px 16px !important;
+  overflow: hidden !important;
+}
+
+.site-page .detail-cover-slot img {
+  width: 100% !important;
+  height: 100% !important;
+  max-height: 260px !important;
+  display: block !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  padding: 10px !important;
+  filter: drop-shadow(7px 7px 0 rgba(26, 26, 36, 0.12)) !important;
+}
+
+.site-page .machine-image-grid {
+  width: 100% !important;
+  margin: 26px 0 40px !important;
+  padding: 0 !important;
+  display: block !important;
+}
+
+.site-page .machine-image-grid .sub-image {
+  margin: 0 !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.12) !important;
+  overflow: hidden !important;
+}
+
+.site-page .sub-image-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-rows: none !important;
+  gap: 18px !important;
+}
+
+.site-page .machine-image-grid .sub-image img {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 150px !important;
+  display: block !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+
+@media screen and (max-width: 1100px) {
+  .site-page .machine-index {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .site-page .machine-detail-hero,
+  .site-page .machine-image-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .site-page .detail-cover-slot {
+    max-width: 220px !important;
+    min-height: 190px !important;
+    justify-self: start !important;
+  }
+
+  .site-page .sub-image-grid {
+    grid-template-rows: none !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .site-page .machine-index {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 如果你希望只在子页面隐藏，而保留首页徽章，请告诉我，我会改为更精确的选择器。 */
+.company-grid {
+  max-width: 1200px;
+  margin: 52px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 26px;
+}
+
+.company-intro-panel {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  text-align: left;
+}
+
+.company-intro-panel .section-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  color: var(--pixel-black);
+  font-size: 28px;
+  font-weight: bold;
+  border-bottom: 4px dashed var(--pixel-pink);
+}
+
+.company-intro-panel h2 {
+  display: none;
+}
+
+.company-intro-panel p:last-child {
+  max-width: 760px;
+  color: var(--text-sub);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.company-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.company-btn{
+    background: rgba(255,0,127,.14);
+    border:4px solid rgba(255,0,127,.26);
+    box-shadow:6px 6px 0 rgba(26,26,36,.16);
+
+    min-height:200px;
+    padding:22px 20px;
+
+    display:flex;
+    flex-direction:column;
+
+    text-decoration:none;
+    color:var(--pixel-black);
+
+    transition:transform .08s,box-shadow .08s;
+}
+
+.company-btn:hover{
+    transform:translate(-4px,-4px);
+    box-shadow:var(--card-shadow-hover);
+}
+
+}
+.company-btn{
+    justify-content: flex-start;
+}
+
+.company-icon {
+  display: none;
+}
+
+.company-label{
+    margin-top:0;
+    display:block;
+
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.2;
+}
+
+.company-btn--sega .company-label::before {
+  content: "01";
+}
+
+.company-btn--bemani .company-label::before {
+  content: "02";
+}
+
+.company-btn--other .company-label::before {
+  content: "03";
+}
+
+.company-label::before {
+  color: var(--pixel-pink);
+  font-size: 42px;
+  line-height: 1;
+  border-bottom: 4px dashed var(--pixel-pink);
+  width: fit-content;
+}
+
+.company-btn--sega .company-label::after {
+  content: "maimai / CHUNITHM / Ongeki";
+}
+
+.company-btn--bemani .company-label::after {
+  content: "IIDX / SDVX / pop'n / GITADORA";
+}
+
+.company-btn--other .company-label::after {
+  content: "WACCA / Taiko / jubeat";
+}
+
+.company-label::after{
+    display:block;
+    margin-top:16px;
+
+    color:var(--text-sub);
+    font-size:13px;
+    line-height:1.6;
+    font-family:inherit;
+    font-weight:600;
+}
+
+.company-btn:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 13px 13px 0 var(--pixel-pink);
+}
+
+@media (max-width: 900px) {
+  .company-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .company-btn {
+    min-height: 210px;
+  }
+}
+.guide-page .page-hero {
+  min-height: 230px !important;
+  margin: 0 0 28px 0 !important;
+  padding: 40px 40px 42px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  display: block !important;
+  background:
+    linear-gradient(rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 26, 36, 0.035) 1px, transparent 1px),
+    #fbfbfd !important;
+  background-size: 18px 18px, 18px 18px, auto !important;
+  border: var(--subpage-border-soft) !important;
+  box-shadow: 6px 6px 0 rgba(26, 26, 36, 0.1) !important;
+}
+
+.guide-page .page-hero::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: url("../assets/images/guide-title-bg.png") right center / auto 100% no-repeat !important;
+  opacity: 0.58 !important;
+  z-index: 0 !important;
+  pointer-events: none !important;
+  filter: saturate(1.08) contrast(1.02) !important;
+}
+
+.guide-page .page-hero::after {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  background:
+    linear-gradient(90deg, #fbfbfd 0%, #fbfbfd 43%, rgba(251, 251, 253, 0.88) 51%, rgba(251, 251, 253, 0.38) 64%, rgba(251, 251, 253, 0) 78%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.18)) !important;
+  pointer-events: none !important;
+}
+
+.guide-page .page-hero > div:first-child {
+  width: auto !important;
+  max-width: 560px !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.guide-page .page-hero > div:first-child p {
+  max-width: 100% !important;
+}
+
+@media screen and (max-width: 768px) {
+  .guide-page .page-hero {
+    min-height: 230px !important;
+    padding: 26px 20px 96px !important;
+  }
+
+  .guide-page .page-hero::before {
+    background:
+      linear-gradient(90deg, #fbfbfd 0%, rgba(251, 251, 253, 0.9) 30%, rgba(251, 251, 253, 0.42) 62%, rgba(251, 251, 253, 0.06) 100%),
+      url("../assets/images/guide-title-bg.png") right center / auto 100% no-repeat !important;
+    opacity: 0.45 !important;
+  }
+}
+/* ===== 只修手机端：不改原首页布局 ===== */
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .home-main {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .home-poster {
+    width: 100%;
+    padding: 10px 0 40px;
+    overflow: hidden;
+  }
+
+  .home-poster-page {
+    width: calc(100vw - 28px);
+    min-height: auto;
+    padding: 20px 14px 42px;
+    border-width: 3px;
+    margin: 0 auto;
+  }
+
+  .poster-mini-nav {
+    display: none;
+  }
+
+  .home-main-title {
+    font-size: clamp(58px, 18vw, 92px);
+    line-height: 0.82;
+    gap: 8px;
+    max-width: 100%;
+  }
+
+  .home-subtitle {
+    margin-top: 22px;
+    font-size: 18px;
+    padding: 8px 14px;
+    border-width: 3px;
+    box-shadow: 4px 4px 0 var(--pixel-black);
+  }
+
+  .home-title-lockup::after {
+    width: 70vw;
+    margin-top: 18px;
+  }
+
+  .home-avatar-scene {
+    margin: 36px auto 42px;
+  }
+
+  .home-poster-copy {
+    max-width: 88%;
+    margin-bottom: 42px;
+  }
+
+  .home-poster-copy p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .home-poster-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    width: min(260px, 78vw);
+    margin: 0 auto;
+  }
+
+  .home-poster-grid .home-entry-card {
+    min-height: 280px;
+    padding: 28px 24px 26px;
+  }
+
+  .home-poster-grid .entry-pixel-icon {
+    height: 100px;
+  }
+
+  .home-poster-grid .home-entry-card span {
+    font-size: 24px;
+  }
+
+  .home-poster-grid .home-entry-card h3 {
+    font-size: 24px;
+  }
+
+  .home-poster-grid .home-entry-card p {
+    font-size: 15px;
+  }
+
+  .pixel-music-box {
+    right: 8px;
+    bottom: 8px;
+    transform: scale(0.85);
+    transform-origin: right bottom;
+  }
+}
+
+/* ================================
+   MOBILE ONLY FIX
+   PC端不动，只修手机端
+================================ */
+@media (max-width: 768px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .site-header {
+    padding: 10px 12px;
+  }
+
+  .header-inner {
+    width: 100%;
+  }
+
+  .brand-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-text strong {
+    font-size: 18px;
+  }
+
+  .brand-text em {
+    font-size: 11px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 70px;
+    right: 14px;
+    z-index: 999;
+    background: #fff;
+    border: 3px solid var(--pixel-black);
+    box-shadow: 4px 4px 0 var(--pixel-black);
+    padding: 10px;
+  }
+
+  .site-nav.open {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .site-nav a {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  /* 首页整体 */
+  .home-poster {
+    padding: 34px 0 42px;
+  }
+
+  .home-poster-page {
+    width: calc(100vw - 24px);
+    min-height: auto;
+    padding: 28px 16px 36px;
+    overflow: hidden;
+  }
+
+  .poster-mini-nav {
+    display: none;
+  }
+
+  .home-main-title {
+    font-size: clamp(54px, 15vw, 76px) !important;
+    line-height: 0.95;
+    gap: 18px;
+    letter-spacing: 0.08em;
+    transform: none !important;
+  }
+
+  .home-main-title span {
+    letter-spacing: 0.08em;
+    transform: none !important;
+    white-space: nowrap;
+  }
+
+  .home-subtitle {
+    font-size: 17px;
+    margin-top: 22px;
+  }
+
+  .home-avatar-scene {
+    margin: 30px auto 34px;
+  }
+
+  .home-poster-copy {
+    max-width: 88%;
+    margin-bottom: 34px;
+  }
+
+  .home-poster-copy p {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* 首页入口：两列 */
+  .home-poster-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 14px !important;
+  }
+
+  .home-poster-grid .home-entry-card {
+    min-height: 170px !important;
+    padding: 14px 12px !important;
+  }
+
+  .home-poster-grid .entry-pixel-icon {
+    height: 54px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .home-poster-grid .entry-pixel-icon::before {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .home-poster-grid .home-entry-card span {
+    font-size: 19px;
+  }
+
+  .home-poster-grid .home-entry-card small {
+    font-size: 9px;
+    margin-bottom: 8px;
+  }
+
+  .home-poster-grid .home-entry-card h3 {
+    font-size: 18px !important;
+    margin-bottom: 6px;
+  }
+
+  .home-poster-grid .home-entry-card p {
+    font-size: 12px !important;
+    line-height: 1.4;
+  }
+
+  /* 子页面外框 */
+  .site-page main {
+    width: calc(100vw - 24px);
+    margin: 18px auto 42px;
+    padding: 18px 12px 28px;
+    box-shadow: 5px 5px 0 var(--pixel-black);
+  }
+
+  .site-page section {
+    margin: 18px 0 !important;
+  }
+
+  /* 子页面 hero */
+  .site-page .page-hero,
+  .site-page .machine-detail-hero {
+    display: block !important;
+    margin: 0 0 24px !important;
+    padding: 0 !important;
+  }
+
+  .page-hero h1,
+  .site-page .page-hero h1,
+  .site-page .machine-identity h1 {
+    font-size: 34px !important;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .page-hero p,
+  .site-page .page-hero p {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .page-slot,
+  .visual-slot {
+    display: none !important;
+  }
+
+  /* 分类页大卡片/时间线/公司按钮统一缩小 */
+  .history-timeline-unified,
+  .company-grid,
+  .company-intro-panel,
+  .type-machine-board,
+  .machine-toolbar,
+  .beginner-flow,
+  .timeline-board,
+  .recommend-board,
+  .resource-strip {
+    padding: 18px !important;
+    margin: 18px 0 !important;
+  }
+
+  .timeline-track {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .company-buttons-row,
+  .company-buttons {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px !important;
+  }
+
+  .company-buttons-row .company-btn,
+  .company-buttons .company-btn {
+    width: 100% !important;
+    min-height: auto !important;
+    padding: 16px 14px !important;
+  }
+
+  .company-desc {
+    margin-top: 12px !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  /* 所有卡片缩小 */
+  .category-grid,
+  .machine-index,
+  .guide-layout,
+  .gallery-wall,
+  .machine-detail-layout,
+  .detail-gallery-grid {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+    padding: 0 !important;
+    margin: 18px 0 !important;
+  }
+
+  .category-card,
+  .machine-card,
+  .guide-card,
+  .gallery-card,
+  .history-card,
+  .detail-section,
+  .machine-option {
+    min-height: auto !important;
+    padding: 18px !important;
+  }
+
+  .category-card h2,
+  .machine-card h2,
+  .guide-card h2,
+  .gallery-card h2,
+  .detail-section h2 {
+    font-size: 22px !important;
+    margin-bottom: 8px;
+  }
+
+  .category-card p,
+  .machine-card p,
+  .guide-card p,
+  .gallery-card p,
+  .detail-section p {
+    font-size: 14px !important;
+    line-height: 1.6;
+    margin-bottom: 12px !important;
+  }
+
+  /* 搜索筛选 */
+  .machine-toolbar {
+    display: block !important;
+  }
+
+  .type-filter {
+    justify-content: flex-start;
+    margin-top: 12px;
+  }
+
+  .type-filter button {
+    font-size: 12px;
+    padding: 6px 9px;
+  }
+
+  /* 画廊 */
+  .pinterest-gallery {
+    column-count: 2 !important;
+    column-gap: 14px !important;
+    padding: 0 !important;
+  }
+
+  .pin-slot {
+    margin-bottom: 14px !important;
+  }
+
+  /* BGM按钮缩小 */
+  .pixel-music-box {
+    right: 8px;
+    bottom: 8px;
+    transform: scale(0.78);
+    transform-origin: right bottom;
+  }
+}
+/* ===============================
+   手机端最终修正版：标题 / 导航 / 子页面标题卡片
+   直接放在 style.css 最后
+================================ */
+
+@media screen and (max-width: 768px) {
+
+  /* 1. 首页英文标题：解决 RHYTHM 太挤 */
+  .home-main-title {
+    font-size: clamp(3.1rem, 15vw, 4.8rem) !important;
+    line-height: 1.08 !important;
+    letter-spacing: 0.03em !important;
+    gap: 16px !important;
+    text-shadow: 2px 2px 0 #ffffff, 4px 4px 0 rgba(26,26,36,0.18) !important;
+  }
+
+  .home-main-title span,
+  .home-main-title span:nth-child(2) {
+    letter-spacing: 0.03em !important;
+    transform: none !important;
+  }
+
+  .home-subtitle {
+    font-size: 15px !important;
+    padding: 8px 14px !important;
+    margin-top: 28px !important;
+  }
+
+  .home-poster {
+    padding: 28px 0 36px !important;
+  }
+
+  .home-poster-page {
+    width: calc(100vw - 34px) !important;
+    min-height: auto !important;
+    padding: 36px 18px 32px !important;
+  }
+
+
+/* 2. 手机端导航：最终修正，不再外溢 */
+.site-header {
+  width: calc(100vw - 32px) !important;
+  max-width: 480px !important;
+  margin: 12px auto 0 !important;
+  padding: 10px !important;
+  overflow: visible !important;
+}
+
+.header-inner {
+  width: 100% !important;
+  max-width: none !important;
+  padding: 0 !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+.site-nav {
+  position: static !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 10px 0 0 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  background: transparent !important;
+  overflow: visible !important;
+}
+
+.site-nav.open {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  gap: 10px !important;
+}
+
+.site-nav a {
+  width: 100% !important;
+  margin: 0 !important;
+  min-height: 48px !important;
+  padding: 12px 10px !important;
+  box-sizing: border-box !important;
+  border: 2px solid var(--pixel-black) !important;
+  box-shadow: 4px 4px 0 var(--pixel-black) !important;
+  background: #fff !important;
+}
+
+.site-nav a.active {
+  background: var(--pixel-pink) !important;
+  color: #fff !important;
+}
+
+
+  /* 3. 子页面标题卡片：统一变松，不再挤 */
+  .site-page main {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .site-page .page-hero,
+  .category-page .page-hero,
+  .machines-page .page-hero,
+  .guide-page .page-hero,
+  .gallery-page .page-hero,
+  .company-page .page-hero {
+    width: 100% !important;
+    min-height: auto !important;
+    margin: 22px auto 26px !important;
+    padding: 26px 20px 30px !important;
+    border: 2px solid #ff9fc4 !important;
+    box-shadow: 4px 4px 0 rgba(26,26,36,0.14) !important;
+    overflow: hidden !important;
+  }
+
+  .site-page .page-hero > div:first-child,
+  .category-page .page-hero > div:first-child,
+  .machines-page .page-hero > div:first-child,
+  .guide-page .page-hero > div:first-child,
+  .gallery-page .page-hero > div:first-child,
+  .company-page .page-hero > div:first-child {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .site-page .page-hero h1 {
+    font-size: clamp(2.2rem, 12vw, 3.2rem) !important;
+    line-height: 1.05 !important;
+    letter-spacing: 0 !important;
+    margin: 4px 0 16px !important;
+    text-shadow: none !important;
+  }
+
+  .site-page .page-hero h1::after {
+    width: 92px !important;
+    height: 4px !important;
+    margin-top: 12px !important;
+  }
+
+  .site-page .page-hero p {
+    font-size: 15px !important;
+    line-height: 1.75 !important;
+    max-width: 100% !important;
+    color: #555 !important;
+  }
+
+  .site-page .page-hero .eyebrow {
+    font-size: 12px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .site-page .page-hero .page-slot,
+  .visual-slot.page-slot {
+    display: none !important;
+  }
+
+  .category-page .page-hero::after,
+  .machines-page .page-hero::after,
+  .guide-page .page-hero::after {
+    background: rgba(255,255,255,0.76) !important;
+  }
+
+  .category-page .page-hero::before,
+  .machines-page .page-hero::before,
+  .guide-page .page-hero::before {
+    opacity: 0.28 !important;
+    background-size: auto 100% !important;
+  }
+}
+/* ===============================
+   手机端缩小子页面各模块间距
+=============================== */
+@media (max-width:768px){
+
+  /* Hero和下面内容的距离 */
+  .page-hero{
+      margin-bottom:18px !important;
+      padding-bottom:22px !important;
+  }
+
+  /* 时间轴模块 */
+  .history-timeline-unified,
+  .history-timeline-section{
+      margin-top:0 !important;
+      margin-bottom:24px !important;
+  }
+
+  /* 如果还有白色大容器 */
+  .category-paper-container,
+  .detail-paper-container{
+      margin-top:18px !important;
+      padding-top:22px !important;
+  }
+
+}
+.page-hero,
+.company-hero {
+  display: block !important;
+}
+
+.page-hero > div:first-child,
+.company-hero > div:first-child {
+  max-width: 760px !important;
+}
+.company-intro-card {
+  margin: 26px 0 34px;
+  padding: 26px 30px;
+  border: 2px solid #ff9fc4;
+  background: rgba(255,255,255,0.72);
+  box-shadow: 4px 4px 0 rgba(255,0,127,0.18);
+}
+
+.company-intro-card h2 {
+  font-size: 24px;
+  margin-bottom: 12px;
+  color: var(--pixel-black);
+}
+
+.company-intro-card p {
+  max-width: 900px;
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--text-sub);
+}
